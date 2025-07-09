@@ -306,6 +306,10 @@ class OllamaEmbed(Base):
 
 
 class FastEmbed(DefaultEmbedding):
+    """
+    replace with embedding service api
+    TODO: change the model to colbert
+    """
     _FACTORY_NAME = "FastEmbed"
 
     def __init__(
@@ -617,6 +621,9 @@ class LmStudioEmbed(LocalAIEmbed):
 
 
 class OpenAI_APIEmbed(OpenAIEmbed):
+    """
+    vLLM and OpenAI API compatible embedding model.
+    """
     _FACTORY_NAME = ["VLLM", "OpenAI-API-Compatible"]
 
     def __init__(self, key, model_name, base_url):
