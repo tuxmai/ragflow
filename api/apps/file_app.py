@@ -310,10 +310,9 @@ def get(file_id):
         ext = ext.group(1) if ext else None
         if ext:
             if file.type == FileType.VISUAL.value:
-                content_type = CONTENT_TYPE_MAP.get(ext, f"image/{ext}")
+                response.headers.set("Content-Type", "image/%s" % ext.group(1))
             else:
-                content_type = CONTENT_TYPE_MAP.get(ext, f"application/{ext}")
-            response.headers.set("Content-Type", content_type)
+                response.headers.set("Content-Type", "application/%s" % ext.group(1))
         return response
     except Exception as e:
         return server_error_response(e)
