@@ -193,3 +193,10 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
+#
+docker/mysql_data
+docker/esdata01
+docker/ragflow-logs
+docker/data
+docker/minio_data
+docker/redis_data

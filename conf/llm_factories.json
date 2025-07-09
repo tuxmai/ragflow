@@ -755,6 +755,12 @@
                     "tags": "TEXT EMBEDDING",
                     "max_tokens": 8196,
                     "model_type": "embedding"
+                },
+                {
+                    "llm_name": "jina-embeddings-v4",
+                    "tags": "MULTI-MODAL TEXT EMBEDDING",
+                    "max_tokens": 8196,
+                    "model_type": "embedding"
                 }
             ]
         },
