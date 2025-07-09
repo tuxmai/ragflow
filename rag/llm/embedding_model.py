@@ -411,8 +411,11 @@ class YoudaoEmbed(Base):
 
 
 class JinaEmbed(Base):
+    """
+    TODO: update JinaEmbed to support jina-embeddings-v4
+    """
     _FACTORY_NAME = "Jina"
-
+    # TODO: add embeddings-v4
     def __init__(self, key, model_name="jina-embeddings-v3", base_url="https://api.jina.ai/v1/embeddings"):
         self.base_url = "https://api.jina.ai/v1/embeddings"
         self.headers = {"Content-Type": "application/json", "Authorization": f"Bearer {key}"}
