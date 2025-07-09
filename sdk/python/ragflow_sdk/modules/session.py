@@ -58,15 +58,11 @@ class Session(Base):
             except ValueError:
                 raise Exception(f"Invalid response {res}")
             return self._structure_answer(json_data)
-        
 
     def _structure_answer(self, json_data):
         answer = json_data["data"]["answer"]
         reference = json_data["data"].get("reference", {})
-        temp_dict = {
-            "content": answer,
-            "role": "assistant"
-        }
+        temp_dict = {"content": answer, "role": "assistant"}
         if reference and "chunks" in reference:
             chunks = reference["chunks"]
             temp_dict["reference"] = chunks
@@ -76,18 +72,15 @@ class Session(Base):
     def _ask_chat(self, question: str, stream: bool, **kwargs):
         json_data = {"question": question, "stream": stream, "session_id": self.id}
         json_data.update(kwargs)
-        res = self.post(f"/chats/{self.chat_id}/completions",
-                        json_data, stream=stream)
+        res = self.post(f"/chats/{self.chat_id}/completions", json_data, stream=stream)
         return res
 
     def _ask_agent(self, question: str, stream: bool):
-        res = self.post(f"/agents/{self.agent_id}/completions",
-                        {"question": question, "stream": stream, "session_id": self.id}, stream=stream)
+        res = self.post(f"/agents/{self.agent_id}/completions", {"question": question, "stream": stream, "session_id": self.id}, stream=stream)
         return res
 
     def update(self, update_message):
-        res = self.put(f"/chats/{self.chat_id}/sessions/{self.id}",
-                       update_message)
+        res = self.put(f"/chats/{self.chat_id}/sessions/{self.id}", update_message)
         res = res.json()
         if res.get("code") != 0:
             raise Exception(res.get("message"))

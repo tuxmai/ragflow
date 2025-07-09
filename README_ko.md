@@ -336,7 +336,7 @@ docker build --platform linux/amd64 -f Dockerfile -t infiniflow/ragflow:nightly 
    ```bash
    pkill -f "ragflow_server.py|task_executor.py"
    ```
-   
+
 
 ## 📚 문서
 

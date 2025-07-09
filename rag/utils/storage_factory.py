@@ -41,7 +41,7 @@ class StorageFactory:
         Storage.AZURE_SAS: RAGFlowAzureSasBlob,
         Storage.AWS_S3: RAGFlowS3,
         Storage.OSS: RAGFlowOSS,
-        Storage.OPENDAL: OpenDALStorage
+        Storage.OPENDAL: OpenDALStorage,
     }
 
     @classmethod
@@ -49,5 +49,5 @@ class StorageFactory:
         return cls.storage_mapping[storage]()
 
 
-STORAGE_IMPL_TYPE = os.getenv('STORAGE_IMPL', 'MINIO')
+STORAGE_IMPL_TYPE = os.getenv("STORAGE_IMPL", "MINIO")
 STORAGE_IMPL = StorageFactory.create(Storage[STORAGE_IMPL_TYPE])

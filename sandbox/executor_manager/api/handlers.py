@@ -24,8 +24,10 @@ from services.limiter import limiter
 from services.security import analyze_code_security
 from core.container import _CONTAINER_EXECUTION_SEMAPHORES
 
+
 async def healthz_handler():
     return {"status": "ok"}
+
 
 @limiter.limit("5/second")
 async def run_code_handler(req: CodeExecutionRequest, request: Request):

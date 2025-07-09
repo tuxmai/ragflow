@@ -36,7 +36,7 @@ from rag.settings import PAGERANK_FLD
 from rag.utils import rmSpace
 
 
-@manager.route('/list', methods=['POST'])  # noqa: F821
+@manager.route("/list", methods=["POST"])  # noqa: F821
 @login_required
 @validate_request("doc_id")
 def list_chunk():
@@ -53,9 +53,7 @@ def list_chunk():
         if not e:
             return get_data_error_result(message="Document not found!")
         kb_ids = KnowledgebaseService.get_kb_ids(tenant_id)
-        query = {
-            "doc_ids": [doc_id], "page": page, "size": size, "question": question, "sort": True
-        }
+        query = {"doc_ids": [doc_id], "page": page, "size": size, "question": question, "sort": True}
         if "available_int" in req:
             query["available_int"] = int(req["available_int"])
         sres = settings.retrievaler.search(query, search.index_name(tenant_id), kb_ids, highlight=True)
@@ -63,9 +61,7 @@ def list_chunk():
         for id in sres.ids:
             d = {
                 "chunk_id": id,
-                "content_with_weight": rmSpace(sres.highlight[id]) if question and id in sres.highlight else sres.field[
-                    id].get(
-                    "content_with_weight", ""),
+                "content_with_weight": rmSpace(sres.highlight[id]) if question and id in sres.highlight else sres.field[id].get("content_with_weight", ""),
                 "doc_id": sres.field[id]["doc_id"],
                 "docnm_kwd": sres.field[id]["docnm_kwd"],
                 "important_kwd": sres.field[id].get("important_kwd", []),
@@ -80,12 +76,11 @@ def list_chunk():
         return get_json_result(data=res)
     except Exception as e:
         if str(e).find("not_found") > 0:
-            return get_json_result(data=False, message='No chunk found!',
-                                   code=settings.RetCode.DATA_ERROR)
+            return get_json_result(data=False, message="No chunk found!", code=settings.RetCode.DATA_ERROR)
         return server_error_response(e)
 
 
-@manager.route('/get', methods=['GET'])  # noqa: F821
+@manager.route("/get", methods=["GET"])  # noqa: F821
 @login_required
 def get():
     chunk_id = request.args["chunk_id"]
@@ -111,19 +106,16 @@ def get():
         return get_json_result(data=chunk)
     except Exception as e:
         if str(e).find("NotFoundError") >= 0:
-            return get_json_result(data=False, message='Chunk not found!',
-                                   code=settings.RetCode.DATA_ERROR)
+            return get_json_result(data=False, message="Chunk not found!", code=settings.RetCode.DATA_ERROR)
         return server_error_response(e)
 
 
-@manager.route('/set', methods=['POST'])  # noqa: F821
+@manager.route("/set", methods=["POST"])  # noqa: F821
 @login_required
 @validate_request("doc_id", "chunk_id", "content_with_weight")
 def set():
     req = request.json
-    d = {
-        "id": req["chunk_id"],
-        "content_with_weight": req["content_with_weight"]}
+    d = {"id": req["chunk_id"], "content_with_weight": req["content_with_weight"]}
     d["content_ltks"] = rag_tokenizer.tokenize(req["content_with_weight"])
     d["content_sm_ltks"] = rag_tokenizer.fine_grained_tokenize(d["content_ltks"])
     if "important_kwd" in req:
@@ -156,13 +148,9 @@ def set():
             return get_data_error_result(message="Document not found!")
 
         if doc.parser_id == ParserType.QA:
-            arr = [
-                t for t in re.split(
-                    r"[\n\t]",
-                    req["content_with_weight"]) if len(t) > 1]
+            arr = [t for t in re.split(r"[\n\t]", req["content_with_weight"]) if len(t) > 1]
             q, a = rmPrefix(arr[0]), rmPrefix("\n".join(arr[1:]))
-            d = beAdoc(d, q, a, not any(
-                [rag_tokenizer.is_chinese(t) for t in q + a]))
+            d = beAdoc(d, q, a, not any([rag_tokenizer.is_chinese(t) for t in q + a]))
 
         v, c = embd_mdl.encode([doc.name, req["content_with_weight"] if not d.get("question_kwd") else "\n".join(d["question_kwd"])])
         v = 0.1 * v[0] + 0.9 * v[1] if doc.parser_id != ParserType.QA else v[1]
@@ -173,7 +161,7 @@ def set():
         return server_error_response(e)
 
 
-@manager.route('/switch', methods=['POST'])  # noqa: F821
+@manager.route("/switch", methods=["POST"])  # noqa: F821
 @login_required
 @validate_request("chunk_ids", "available_int", "doc_id")
 def switch():
@@ -183,21 +171,19 @@ def switch():
         if not e:
             return get_data_error_result(message="Document not found!")
         for cid in req["chunk_ids"]:
-            if not settings.docStoreConn.update({"id": cid},
-                                                {"available_int": int(req["available_int"])},
-                                                search.index_name(DocumentService.get_tenant_id(req["doc_id"])),
-                                                doc.kb_id):
+            if not settings.docStoreConn.update({"id": cid}, {"available_int": int(req["available_int"])}, search.index_name(DocumentService.get_tenant_id(req["doc_id"])), doc.kb_id):
                 return get_data_error_result(message="Index updating failure")
         return get_json_result(data=True)
     except Exception as e:
         return server_error_response(e)
 
 
-@manager.route('/rm', methods=['POST'])  # noqa: F821
+@manager.route("/rm", methods=["POST"])  # noqa: F821
 @login_required
 @validate_request("chunk_ids", "doc_id")
 def rm():
     from rag.utils.storage_factory import STORAGE_IMPL
+
     req = request.json
     try:
         e, doc = DocumentService.get_by_id(req["doc_id"])
@@ -216,14 +202,13 @@ def rm():
         return server_error_response(e)
 
 
-@manager.route('/create', methods=['POST'])  # noqa: F821
+@manager.route("/create", methods=["POST"])  # noqa: F821
 @login_required
 @validate_request("doc_id", "content_with_weight")
 def create():
     req = request.json
     chunck_id = xxhash.xxh64((req["content_with_weight"] + req["doc_id"]).encode("utf-8")).hexdigest()
-    d = {"id": chunck_id, "content_ltks": rag_tokenizer.tokenize(req["content_with_weight"]),
-         "content_with_weight": req["content_with_weight"]}
+    d = {"id": chunck_id, "content_ltks": rag_tokenizer.tokenize(req["content_with_weight"]), "content_with_weight": req["content_with_weight"]}
     d["content_sm_ltks"] = rag_tokenizer.fine_grained_tokenize(d["content_ltks"])
     d["important_kwd"] = req.get("important_kwd", [])
     if not isinstance(d["important_kwd"], list):
@@ -267,14 +252,13 @@ def create():
         d["q_%d_vec" % len(v)] = v.tolist()
         settings.docStoreConn.insert([d], search.index_name(tenant_id), doc.kb_id)
 
-        DocumentService.increment_chunk_num(
-            doc.id, doc.kb_id, c, 1, 0)
+        DocumentService.increment_chunk_num(doc.id, doc.kb_id, c, 1, 0)
         return get_json_result(data={"chunk_id": chunck_id})
     except Exception as e:
         return server_error_response(e)
 
 
-@manager.route('/retrieval_test', methods=['POST'])  # noqa: F821
+@manager.route("/retrieval_test", methods=["POST"])  # noqa: F821
 @login_required
 @validate_request("kb_id", "question")
 def retrieval_test():
@@ -297,14 +281,11 @@ def retrieval_test():
         tenants = UserTenantService.query(user_id=current_user.id)
         for kb_id in kb_ids:
             for tenant in tenants:
-                if KnowledgebaseService.query(
-                        tenant_id=tenant.tenant_id, id=kb_id):
+                if KnowledgebaseService.query(tenant_id=tenant.tenant_id, id=kb_id):
                     tenant_ids.append(tenant.tenant_id)
                     break
             else:
-                return get_json_result(
-                    data=False, message='Only owner of knowledgebase authorized for this operation.',
-                    code=settings.RetCode.OPERATING_ERROR)
+                return get_json_result(data=False, message="Only owner of knowledgebase authorized for this operation.", code=settings.RetCode.OPERATING_ERROR)
 
         e, kb = KnowledgebaseService.get_by_id(kb_ids[0])
         if not e:
@@ -324,17 +305,11 @@ def retrieval_test():
             question += keyword_extraction(chat_mdl, question)
 
         labels = label_question(question, [kb])
-        ranks = settings.retrievaler.retrieval(question, embd_mdl, tenant_ids, kb_ids, page, size,
-                               similarity_threshold, vector_similarity_weight, top,
-                               doc_ids, rerank_mdl=rerank_mdl, highlight=req.get("highlight"),
-                               rank_feature=labels
-                               )
+        ranks = settings.retrievaler.retrieval(
+            question, embd_mdl, tenant_ids, kb_ids, page, size, similarity_threshold, vector_similarity_weight, top, doc_ids, rerank_mdl=rerank_mdl, highlight=req.get("highlight"), rank_feature=labels
+        )
         if use_kg:
-            ck = settings.kg_retrievaler.retrieval(question,
-                                                   tenant_ids,
-                                                   kb_ids,
-                                                   embd_mdl,
-                                                   LLMBundle(kb.tenant_id, LLMType.CHAT))
+            ck = settings.kg_retrievaler.retrieval(question, tenant_ids, kb_ids, embd_mdl, LLMBundle(kb.tenant_id, LLMType.CHAT))
             if ck["content_with_weight"]:
                 ranks["chunks"].insert(0, ck)
 
@@ -345,21 +320,17 @@ def retrieval_test():
         return get_json_result(data=ranks)
     except Exception as e:
         if str(e).find("not_found") > 0:
-            return get_json_result(data=False, message='No chunk found! Check the chunk status please!',
-                                   code=settings.RetCode.DATA_ERROR)
+            return get_json_result(data=False, message="No chunk found! Check the chunk status please!", code=settings.RetCode.DATA_ERROR)
         return server_error_response(e)
 
 
-@manager.route('/knowledge_graph', methods=['GET'])  # noqa: F821
+@manager.route("/knowledge_graph", methods=["GET"])  # noqa: F821
 @login_required
 def knowledge_graph():
     doc_id = request.args["doc_id"]
     tenant_id = DocumentService.get_tenant_id(doc_id)
     kb_ids = KnowledgebaseService.get_kb_ids(tenant_id)
-    req = {
-        "doc_ids": [doc_id],
-        "knowledge_graph_kwd": ["graph", "mind_map"]
-    }
+    req = {"doc_ids": [doc_id], "knowledge_graph_kwd": ["graph", "mind_map"]}
     sres = settings.retrievaler.search(req, search.index_name(tenant_id), kb_ids)
     obj = {"graph": {}, "mind_map": {}}
     for id in sres.ids[:2]:
@@ -369,19 +340,19 @@ def knowledge_graph():
         except Exception:
             continue
 
-        if ty == 'mind_map':
+        if ty == "mind_map":
             node_dict = {}
 
             def repeat_deal(content_json, node_dict):
-                if 'id' in content_json:
-                    if content_json['id'] in node_dict:
-                        node_name = content_json['id']
-                        content_json['id'] += f"({node_dict[content_json['id']]})"
+                if "id" in content_json:
+                    if content_json["id"] in node_dict:
+                        node_name = content_json["id"]
+                        content_json["id"] += f"({node_dict[content_json['id']]})"
                         node_dict[node_name] += 1
                     else:
-                        node_dict[content_json['id']] = 1
-                if 'children' in content_json and content_json['children']:
-                    for item in content_json['children']:
+                        node_dict[content_json["id"]] = 1
+                if "children" in content_json and content_json["children"]:
+                    for item in content_json["children"]:
                         repeat_deal(item, node_dict)
 
             repeat_deal(content_json, node_dict)

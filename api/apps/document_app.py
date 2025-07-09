@@ -250,7 +250,6 @@ def get_filter():
     else:
         return get_json_result(data=False, message="Only owner of knowledgebase authorized for this operation.", code=settings.RetCode.OPERATING_ERROR)
 
-
     keywords = req.get("keywords", "")
 
     suffix = req.get("suffix", [])

@@ -207,4 +207,3 @@ class GiteeSeq2txt(Base):
             base_url = "https://ai.gitee.com/v1/"
         self.client = OpenAI(api_key=key, base_url=base_url)
         self.model_name = model_name
-

@@ -310,6 +310,7 @@ class FastEmbed(DefaultEmbedding):
     replace with embedding service api
     TODO: change the model to colbert
     """
+
     _FACTORY_NAME = "FastEmbed"
 
     def __init__(
@@ -418,7 +419,9 @@ class JinaEmbed(Base):
     """
     TODO: update JinaEmbed to support jina-embeddings-v4
     """
+
     _FACTORY_NAME = "Jina"
+
     # TODO: add embeddings-v4
     def __init__(self, key, model_name="jina-embeddings-v3", base_url="https://api.jina.ai/v1/embeddings"):
         self.base_url = "https://api.jina.ai/v1/embeddings"
@@ -624,6 +627,7 @@ class OpenAI_APIEmbed(OpenAIEmbed):
     """
     vLLM and OpenAI API compatible embedding model.
     """
+
     _FACTORY_NAME = ["VLLM", "OpenAI-API-Compatible"]
 
     def __init__(self, key, model_name, base_url):
