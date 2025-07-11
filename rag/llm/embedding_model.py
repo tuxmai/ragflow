@@ -144,6 +144,10 @@ class OpenAIEmbed(Base):
 
 
 class LocalAIEmbed(Base):
+    """
+    TODO: add vLLM support explicitly
+    """
+
     _FACTORY_NAME = "LocalAI"
 
     def __init__(self, key, model_name, base_url):
