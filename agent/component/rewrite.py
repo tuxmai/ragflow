@@ -14,7 +14,8 @@
 #  limitations under the License.
 #
 from abc import ABC
-from agent.component import GenerateParam, Generate
+
+from agent.component import Generate, GenerateParam
 from rag.prompts import full_question
 
 

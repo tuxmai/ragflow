@@ -15,15 +15,14 @@
 #
 
 from flask import request
-from flask_login import login_required, current_user
+from flask_login import current_user, login_required
 
 from api import settings
-from api.db import UserTenantRole, StatusEnum
+from api.db import StatusEnum, UserTenantRole
 from api.db.db_models import UserTenant
-from api.db.services.user_service import UserTenantService, UserService
-
-from api.utils import get_uuid, delta_seconds
-from api.utils.api_utils import get_json_result, validate_request, server_error_response, get_data_error_result
+from api.db.services.user_service import UserService, UserTenantService
+from api.utils import delta_seconds, get_uuid
+from api.utils.api_utils import get_data_error_result, get_json_result, server_error_response, validate_request
 
 
 @manager.route("/<tenant_id>/user/list", methods=["GET"])  # noqa: F821

@@ -23,10 +23,8 @@ from PIL import Image
 from api.db import LLMType
 from api.db.services.llm_service import LLMBundle
 from deepdoc.vision import OCR
-from rag.nlp import tokenize
+from rag.nlp import rag_tokenizer, tokenize
 from rag.utils import clean_markdown_block
-from rag.nlp import rag_tokenizer
-
 
 ocr = OCR()
 

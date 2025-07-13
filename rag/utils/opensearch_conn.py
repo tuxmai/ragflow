@@ -14,22 +14,21 @@
 #  limitations under the License.
 #
 
-import logging
-import re
-import json
-import time
-import os
-
 import copy
-from opensearchpy import OpenSearch, NotFoundError
-from opensearchpy import UpdateByQuery, Q, Search, Index
-from opensearchpy import ConnectionTimeout
-from rag import settings
-from rag.settings import TAG_FLD, PAGERANK_FLD
-from rag.utils import singleton
+import json
+import logging
+import os
+import re
+import time
+
+from opensearchpy import ConnectionTimeout, Index, NotFoundError, OpenSearch, Q, Search, UpdateByQuery
+
 from api.utils.file_utils import get_project_base_directory
-from rag.utils.doc_store_conn import DocStoreConnection, MatchExpr, OrderByExpr, MatchTextExpr, MatchDenseExpr, FusionExpr
+from rag import settings
 from rag.nlp import is_english, rag_tokenizer
+from rag.settings import PAGERANK_FLD, TAG_FLD
+from rag.utils import singleton
+from rag.utils.doc_store_conn import DocStoreConnection, FusionExpr, MatchDenseExpr, MatchExpr, MatchTextExpr, OrderByExpr
 
 ATTEMPT_TIME = 2
 

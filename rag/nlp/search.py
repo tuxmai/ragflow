@@ -14,16 +14,17 @@
 #  limitations under the License.
 #
 import logging
-import re
 import math
+import re
 from collections import OrderedDict
 from dataclasses import dataclass
 
-from rag.settings import TAG_FLD, PAGERANK_FLD
-from rag.utils import rmSpace, get_float
-from rag.nlp import rag_tokenizer, query
 import numpy as np
-from rag.utils.doc_store_conn import DocStoreConnection, MatchDenseExpr, FusionExpr, OrderByExpr
+
+from rag.nlp import query, rag_tokenizer
+from rag.settings import PAGERANK_FLD, TAG_FLD
+from rag.utils import get_float, rmSpace
+from rag.utils.doc_store_conn import DocStoreConnection, FusionExpr, MatchDenseExpr, OrderByExpr
 
 
 def index_name(uid):

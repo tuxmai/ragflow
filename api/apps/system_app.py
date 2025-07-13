@@ -13,29 +13,23 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License
 #
+import json
 import logging
 from datetime import datetime
-import json
+from timeit import default_timer as timer
 
-from flask_login import login_required, current_user
+from flask_login import current_user, login_required
 
+from api import settings
 from api.db.db_models import APIToken
 from api.db.services.api_service import APITokenService
 from api.db.services.knowledgebase_service import KnowledgebaseService
 from api.db.services.user_service import UserTenantService
-from api import settings
 from api.utils import current_timestamp, datetime_format
-from api.utils.api_utils import (
-    get_json_result,
-    get_data_error_result,
-    server_error_response,
-    generate_confirmation_token,
-)
+from api.utils.api_utils import generate_confirmation_token, get_data_error_result, get_json_result, server_error_response
 from api.versions import get_ragflow_version
-from rag.utils.storage_factory import STORAGE_IMPL, STORAGE_IMPL_TYPE
-from timeit import default_timer as timer
-
 from rag.utils.redis_conn import REDIS_CONN
+from rag.utils.storage_factory import STORAGE_IMPL, STORAGE_IMPL_TYPE
 
 
 @manager.route("/version", methods=["GET"])  # noqa: F821

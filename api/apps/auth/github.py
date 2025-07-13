@@ -15,6 +15,7 @@
 #
 
 import requests
+
 from .oauth import OAuthClient, UserInfo
 
 

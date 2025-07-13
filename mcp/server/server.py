@@ -21,6 +21,7 @@ from contextlib import asynccontextmanager
 from functools import wraps
 
 import click
+import mcp.types as types
 import requests
 from starlette.applications import Starlette
 from starlette.middleware import Middleware
@@ -28,7 +29,6 @@ from starlette.responses import JSONResponse, Response
 from starlette.routing import Mount, Route
 from strenum import StrEnum
 
-import mcp.types as types
 from mcp.server.lowlevel import Server
 
 

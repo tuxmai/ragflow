@@ -15,25 +15,18 @@
 #
 import json
 import logging
+
 import networkx as nx
 import trio
 
 from api import settings
 from api.utils import get_uuid
-from graphrag.light.graph_extractor import GraphExtractor as LightKGExt
-from graphrag.general.graph_extractor import GraphExtractor as GeneralKGExt
-from graphrag.general.community_reports_extractor import CommunityReportsExtractor
 from graphrag.entity_resolution import EntityResolution
+from graphrag.general.community_reports_extractor import CommunityReportsExtractor
 from graphrag.general.extractor import Extractor
-from graphrag.utils import (
-    graph_merge,
-    get_graph,
-    set_graph,
-    chunk_id,
-    does_graph_contains,
-    tidy_graph,
-    GraphChange,
-)
+from graphrag.general.graph_extractor import GraphExtractor as GeneralKGExt
+from graphrag.light.graph_extractor import GraphExtractor as LightKGExt
+from graphrag.utils import GraphChange, chunk_id, does_graph_contains, get_graph, graph_merge, set_graph, tidy_graph
 from rag.nlp import rag_tokenizer, search
 from rag.utils.redis_conn import RedisDistributedLock
 

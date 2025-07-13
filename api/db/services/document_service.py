@@ -35,10 +35,10 @@ from api.db.services.common_service import CommonService
 from api.db.services.knowledgebase_service import KnowledgebaseService
 from api.utils import current_timestamp, get_format_time, get_uuid
 from rag.nlp import rag_tokenizer, search
-from rag.settings import get_svr_queue_name, SVR_CONSUMER_GROUP_NAME
+from rag.settings import SVR_CONSUMER_GROUP_NAME, get_svr_queue_name
+from rag.utils.doc_store_conn import OrderByExpr
 from rag.utils.redis_conn import REDIS_CONN
 from rag.utils.storage_factory import STORAGE_IMPL
-from rag.utils.doc_store_conn import OrderByExpr
 
 
 class DocumentService(CommonService):

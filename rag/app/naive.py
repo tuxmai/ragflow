@@ -31,7 +31,7 @@ from api.db.services.llm_service import LLMBundle
 from deepdoc.parser import DocxParser, ExcelParser, HtmlParser, JsonParser, MarkdownParser, PdfParser, TxtParser
 from deepdoc.parser.figure_parser import VisionFigureParser, vision_figure_parser_figure_data_wrapper
 from deepdoc.parser.pdf_parser import PlainParser, VisionParser
-from rag.nlp import concat_img, find_codec, naive_merge, naive_merge_with_images, naive_merge_docx, rag_tokenizer, tokenize_chunks, tokenize_chunks_with_images, tokenize_table
+from rag.nlp import concat_img, find_codec, naive_merge, naive_merge_docx, naive_merge_with_images, rag_tokenizer, tokenize_chunks, tokenize_chunks_with_images, tokenize_table
 
 
 class Docx(DocxParser):
@@ -75,6 +75,7 @@ class Docx(DocxParser):
     def __get_nearest_title(self, table_index, filename):
         """Get the hierarchical title structure before the table"""
         import re
+
         from docx.text.paragraph import Paragraph
 
         titles = []

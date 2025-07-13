@@ -13,55 +13,53 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+import copy
+import faulthandler
+import json
+import logging
+import os
+
 # from beartype import BeartypeConf
 # from beartype.claw import beartype_all  # <-- you didn't sign up for this
 # beartype_all(conf=BeartypeConf(violation_type=UserWarning))    # <-- emit warnings from all code
 import random
+import re
+import signal
 import sys
 import threading
 import time
-
-from api.utils.log_utils import init_root_logger, get_project_base_directory
-from graphrag.general.index import run_graphrag
-from graphrag.utils import get_llm_cache, set_llm_cache, get_tags_from_cache, set_tags_to_cache
-from rag.prompts import keyword_extraction, question_proposal, content_tagging
-
-import logging
-import os
+import tracemalloc
 from datetime import datetime
-import json
-import xxhash
-import copy
-import re
 from functools import partial
 from io import BytesIO
 from multiprocessing.context import TimeoutError
 from timeit import default_timer as timer
-import tracemalloc
-import signal
-import trio
-import exceptiongroup
-import faulthandler
 
+import exceptiongroup
 import numpy as np
+import trio
+import xxhash
 from peewee import DoesNotExist
 
+from api import settings
 from api.db import LLMType, ParserType
+from api.db.db_models import close_connection
 from api.db.services.document_service import DocumentService
+from api.db.services.file2document_service import File2DocumentService
 from api.db.services.llm_service import LLMBundle
 from api.db.services.task_service import TaskService
-from api.db.services.file2document_service import File2DocumentService
-from api import settings
+from api.utils.log_utils import get_project_base_directory, init_root_logger
 from api.versions import get_ragflow_version
-from api.db.db_models import close_connection
-from rag.app import laws, paper, presentation, manual, qa, table, book, resume, picture, naive, one, audio, email, tag
-from rag.nlp import search, rag_tokenizer
+from graphrag.general.index import run_graphrag
+from graphrag.utils import chat_limiter, get_llm_cache, get_tags_from_cache, set_llm_cache, set_tags_to_cache
+from rag.app import audio, book, email, laws, manual, naive, one, paper, picture, presentation, qa, resume, table, tag
+from rag.nlp import rag_tokenizer, search
+from rag.prompts import content_tagging, keyword_extraction, question_proposal
 from rag.raptor import RecursiveAbstractiveProcessing4TreeOrganizedRetrieval as Raptor
-from rag.settings import DOC_MAXIMUM_SIZE, DOC_BULK_SIZE, EMBEDDING_BATCH_SIZE, SVR_CONSUMER_GROUP_NAME, get_svr_queue_name, get_svr_queue_names, print_rag_settings, TAG_FLD, PAGERANK_FLD
+from rag.settings import DOC_BULK_SIZE, DOC_MAXIMUM_SIZE, EMBEDDING_BATCH_SIZE, PAGERANK_FLD, SVR_CONSUMER_GROUP_NAME, TAG_FLD, get_svr_queue_name, get_svr_queue_names, print_rag_settings
 from rag.utils import num_tokens_from_string, truncate
 from rag.utils.redis_conn import REDIS_CONN, RedisDistributedLock
 from rag.utils.storage_factory import STORAGE_IMPL
-from graphrag.utils import chat_limiter
 
 BATCH_SIZE = 64
 

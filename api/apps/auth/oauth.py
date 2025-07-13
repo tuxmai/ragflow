@@ -14,8 +14,9 @@
 #  limitations under the License.
 #
 
-import requests
 import urllib.parse
+
+import requests
 
 
 class UserInfo:

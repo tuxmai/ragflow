@@ -13,11 +13,12 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from api.routes import router as api_router
 from core.config import init
 from fastapi import FastAPI
 from services.limiter import limiter, rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
+
+from api.routes import router as api_router
 
 app = FastAPI(lifespan=init())
 app.include_router(api_router)

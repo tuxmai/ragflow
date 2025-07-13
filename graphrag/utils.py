@@ -6,27 +6,26 @@ Reference:
  - [LightRag](https://github.com/HKUDS/LightRAG)
 """
 
+import dataclasses
 import html
 import json
 import logging
+import os
 import re
 import time
 from collections import defaultdict
 from hashlib import md5
-from typing import Any, Callable
-import os
-import trio
-from typing import Set, Tuple
+from typing import Any, Callable, Set, Tuple
 
 import networkx as nx
 import numpy as np
+import trio
 import xxhash
 from networkx.readwrite import json_graph
-import dataclasses
 
 from api import settings
 from api.utils import get_uuid
-from rag.nlp import search, rag_tokenizer
+from rag.nlp import rag_tokenizer, search
 from rag.utils.doc_store_conn import OrderByExpr
 from rag.utils.redis_conn import REDIS_CONN
 

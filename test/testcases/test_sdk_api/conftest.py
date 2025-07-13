@@ -18,12 +18,7 @@ from pathlib import Path
 from time import sleep
 
 import pytest
-from common import (
-    batch_add_chunks,
-    batch_create_chat_assistants,
-    batch_create_datasets,
-    bulk_upload_documents,
-)
+from common import batch_add_chunks, batch_create_chat_assistants, batch_create_datasets, bulk_upload_documents
 from configs import HOST_ADDRESS, VERSION
 from pytest import FixtureRequest
 from ragflow_sdk import Chat, Chunk, DataSet, Document, RAGFlow

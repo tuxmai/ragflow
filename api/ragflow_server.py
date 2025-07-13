@@ -27,22 +27,21 @@ import logging
 import os
 import signal
 import sys
+import threading
 import time
 import traceback
-import threading
 import uuid
 
 from werkzeug.serving import run_simple
-from api import settings
-from api.apps import app
-from api.db.runtime_config import RuntimeConfig
-from api.db.services.document_service import DocumentService
-from api import utils
 
+from api import settings, utils
+from api.apps import app
 from api.db.db_models import init_database_tables as init_web_db
 from api.db.init_data import init_web_data
-from api.versions import get_ragflow_version
+from api.db.runtime_config import RuntimeConfig
+from api.db.services.document_service import DocumentService
 from api.utils import show_configs
+from api.versions import get_ragflow_version
 from rag.settings import print_rag_settings
 from rag.utils.mcp_tool_call_conn import shutdown_all_mcp_sessions
 from rag.utils.redis_conn import RedisDistributedLock

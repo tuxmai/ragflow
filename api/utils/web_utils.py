@@ -30,7 +30,6 @@ from selenium.webdriver.support.expected_conditions import staleness_of
 from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 
-
 CONTENT_TYPE_MAP = {
     # Office
     "docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",

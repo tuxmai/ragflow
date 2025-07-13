@@ -17,16 +17,18 @@ import json
 import time
 import traceback
 from uuid import uuid4
+
+import tiktoken
+from peewee import fn
+
 from agent.canvas import Canvas
 from api.db import TenantPermission
-from api.db.db_models import DB, CanvasTemplate, User, UserCanvas, API4Conversation
+from api.db.db_models import DB, API4Conversation, CanvasTemplate, User, UserCanvas
 from api.db.services.api_service import API4ConversationService
 from api.db.services.common_service import CommonService
 from api.db.services.conversation_service import structure_answer
 from api.utils import get_uuid
 from api.utils.api_utils import get_data_openai
-import tiktoken
-from peewee import fn
 
 
 class CanvasTemplateService(CommonService):

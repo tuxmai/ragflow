@@ -1,10 +1,10 @@
-import opendal
 import logging
+
+import opendal
 import pymysql
 
 from api.utils import get_base_config
 from rag.utils import singleton
-
 
 CREATE_TABLE_SQL = """
 CREATE TABLE IF NOT EXISTS `{}` (

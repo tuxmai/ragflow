@@ -14,11 +14,13 @@
 #  limitations under the License.
 #
 import logging
+import re
 from abc import ABC
+
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-import re
+
 from agent.component.base import ComponentBase, ComponentParamBase
 
 

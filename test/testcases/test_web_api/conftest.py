@@ -16,18 +16,7 @@
 from time import sleep
 
 import pytest
-from common import (
-    batch_add_chunks,
-    batch_create_datasets,
-    bulk_upload_documents,
-    delete_chunks,
-    delete_dialogs,
-    list_chunks,
-    list_documents,
-    list_kbs,
-    parse_documents,
-    rm_kb,
-)
+from common import batch_add_chunks, batch_create_datasets, bulk_upload_documents, delete_chunks, delete_dialogs, list_chunks, list_documents, list_kbs, parse_documents, rm_kb
 from libs.auth import RAGFlowWebApiAuth
 from pytest import FixtureRequest
 from utils import wait_for

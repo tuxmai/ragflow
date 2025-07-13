@@ -15,23 +15,24 @@
 #
 import logging
 import re
-from collections import defaultdict, Counter
+from collections import Counter, defaultdict
 from copy import deepcopy
 from typing import Callable
-import trio
+
 import networkx as nx
+import trio
 
 from graphrag.general.graph_prompt import SUMMARIZE_DESCRIPTIONS_PROMPT
 from graphrag.utils import (
+    GraphChange,
+    chat_limiter,
+    flat_uniq_list,
+    get_from_to,
     get_llm_cache,
-    set_llm_cache,
     handle_single_entity_extraction,
     handle_single_relationship_extraction,
+    set_llm_cache,
     split_string_by_multi_markers,
-    flat_uniq_list,
-    chat_limiter,
-    get_from_to,
-    GraphChange,
 )
 from rag.llm.chat_model import Base as CompletionLLM
 from rag.prompts import message_fit_in

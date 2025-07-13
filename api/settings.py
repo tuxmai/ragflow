@@ -71,7 +71,9 @@ REGISTER_ENABLED = 1
 SANDBOX_ENABLED = 0
 SANDBOX_HOST = None
 
-BUILTIN_EMBEDDING_MODELS = ["BAAI/bge-large-zh-v1.5@BAAI", "maidalun1020/bce-embedding-base_v1@Youdao"]
+# BUILTIN_EMBEDDING_MODELS = ["BAAI/bge-large-zh-v1.5@BAAI", "maidalun1020/bce-embedding-base_v1@Youdao"]
+# TODO: sort out embedding models with jina-embeddings-v4
+BUILTIN_EMBEDDING_MODELS = ["jinaai/jina-embeddings-v4"]
 
 
 def get_or_create_secret_key():

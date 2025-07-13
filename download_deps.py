@@ -10,12 +10,13 @@
 # ]
 # ///
 
-from huggingface_hub import snapshot_download
-from typing import Union
-import nltk
+import argparse
 import os
 import urllib.request
-import argparse
+from typing import Union
+
+import nltk
+from huggingface_hub import snapshot_download
 
 
 def get_urls(use_china_mirrors=False) -> Union[str, list[str]]:

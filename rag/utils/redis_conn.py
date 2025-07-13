@@ -14,15 +14,16 @@
 #  limitations under the License.
 #
 
-import logging
 import json
+import logging
 import uuid
 
+import trio
 import valkey as redis
+from valkey.lock import Lock
+
 from rag import settings
 from rag.utils import singleton
-from valkey.lock import Lock
-import trio
 
 
 class RedisMsg:

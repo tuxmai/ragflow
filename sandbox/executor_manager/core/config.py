@@ -16,11 +16,10 @@
 import os
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
-from util import format_timeout_duration, parse_timeout_duration
-
 from core.container import init_containers, teardown_containers
 from core.logger import logger
+from fastapi import FastAPI
+from util import format_timeout_duration, parse_timeout_duration
 
 TIMEOUT = 10
 

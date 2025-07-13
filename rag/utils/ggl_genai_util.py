@@ -1,21 +1,16 @@
-from collections.abc import Iterable
 import glob
 import os
 import time
+from collections.abc import Iterable
 from typing import Any
 
-from IPython.display import display
-import PIL
-from colorama import Fore, Style
 import fitz
 import numpy as np
 import pandas as pd
-from vertexai.generative_models import (
-    GenerationConfig,
-    HarmBlockThreshold,
-    HarmCategory,
-    Image,
-)
+import PIL
+from colorama import Fore, Style
+from IPython.display import display
+from vertexai.generative_models import GenerationConfig, HarmBlockThreshold, HarmCategory, Image
 from vertexai.language_models import TextEmbeddingModel
 from vertexai.vision_models import Image as vision_model_Image
 from vertexai.vision_models import MultiModalEmbeddingModel

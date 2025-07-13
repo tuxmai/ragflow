@@ -13,10 +13,11 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-import logging
 import json
+import logging
 from copy import deepcopy
 from functools import partial
+
 import pandas as pd
 
 from agent.component import component_class

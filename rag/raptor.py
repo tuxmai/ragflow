@@ -15,18 +15,13 @@
 #
 import logging
 import re
-import umap
-import numpy as np
-from sklearn.mixture import GaussianMixture
-import trio
 
-from graphrag.utils import (
-    get_llm_cache,
-    get_embed_cache,
-    set_embed_cache,
-    set_llm_cache,
-    chat_limiter,
-)
+import numpy as np
+import trio
+import umap
+from sklearn.mixture import GaussianMixture
+
+from graphrag.utils import chat_limiter, get_embed_cache, get_llm_cache, set_embed_cache, set_llm_cache
 from rag.utils import truncate
 
 

@@ -17,6 +17,7 @@
 import argparse
 import json
 import logging
+
 import networkx as nx
 import trio
 
@@ -27,7 +28,7 @@ from api.db.services.knowledgebase_service import KnowledgebaseService
 from api.db.services.llm_service import LLMBundle
 from api.db.services.user_service import TenantService
 from graphrag.general.graph_extractor import GraphExtractor
-from graphrag.general.index import update_graph, with_resolution, with_community
+from graphrag.general.index import update_graph, with_community, with_resolution
 
 settings.init_settings()
 

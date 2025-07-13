@@ -15,6 +15,7 @@
 #
 import base64
 
+from core.container import _CONTAINER_EXECUTION_SEMAPHORES
 from core.logger import logger
 from fastapi import Request
 from models.enums import ResultStatus
@@ -22,7 +23,6 @@ from models.schemas import CodeExecutionRequest, CodeExecutionResult
 from services.execution import execute_code
 from services.limiter import limiter
 from services.security import analyze_code_security
-from core.container import _CONTAINER_EXECUTION_SEMAPHORES
 
 
 async def healthz_handler():

@@ -27,15 +27,9 @@ from urllib.parse import quote, urlencode
 from uuid import uuid1
 
 import requests
-from flask import (
-    Response,
-    jsonify,
-    make_response,
-    send_file,
-)
-from flask import (
-    request as flask_request,
-)
+from flask import Response, jsonify, make_response
+from flask import request as flask_request
+from flask import send_file
 from itsdangerous import URLSafeTimedSerializer
 from peewee import OperationalError
 from werkzeug.http import HTTP_STATUS_CODES
