@@ -42,9 +42,7 @@ class Ppt(PptParser):
             for i, slide in enumerate(presentation.slides[from_page:to_page]):
                 try:
                     with BytesIO() as buffered:
-                        slide.get_thumbnail(
-                            0.5, 0.5).save(
-                            buffered, drawing.imaging.ImageFormat.jpeg, quality=80)
+                        slide.get_thumbnail(0.5, 0.5).save(buffered, drawing.imaging.ImageFormat.jpeg, quality=80)
                         imgs.append(Image.open(buffered))
                 except RuntimeError as e:
                     raise RuntimeError(f"ppt parse error at page {i + 1}, original error: {str(e)}") from e
