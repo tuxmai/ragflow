@@ -105,7 +105,7 @@ def register_page(page_path):
     spec = spec_from_file_location(module_name, page_path)
     page = module_from_spec(spec)
     page.app = app
-    page.manager = Blueprint(page_name, module_name)
+    page.manager = Blueprint(page_name, module_name)  # this is the manager for the page
     sys.modules[module_name] = page
     spec.loader.exec_module(page)
     page_name = getattr(page, "page_name", page_name)
@@ -122,7 +122,7 @@ pages_dir = [
     Path(__file__).parent.parent / "api" / "apps" / "sdk",
 ]
 
-client_urls_prefix = [register_page(path) for dir in pages_dir for path in search_pages_path(dir)]
+client_urls_prefix = [register_page(path) for folder_path in pages_dir for path in search_pages_path(folder_path)]
 
 
 @login_manager.request_loader

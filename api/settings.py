@@ -157,15 +157,16 @@ def init_settings():
     DOC_ENGINE = os.environ.get("DOC_ENGINE", "elasticsearch")
     # DOC_ENGINE = os.environ.get('DOC_ENGINE', "opensearch")
     lower_case_doc_engine = DOC_ENGINE.lower()
+    # TODO: add Qdrant support
     if lower_case_doc_engine == "elasticsearch":
         docStoreConn = rag.utils.es_conn.ESConnection()
     elif lower_case_doc_engine == "infinity":
         docStoreConn = rag.utils.infinity_conn.InfinityConnection()
     elif lower_case_doc_engine == "opensearch":
-        docStoreConn = rag.utils.opensearch_coon.OSConnection()
+        docStoreConn = rag.utils.opensearch_conn.OSConnection()
     else:
         raise Exception(f"Not supported doc engine: {DOC_ENGINE}")
-
+    # TODO: retrieval embedding
     retrievaler = search.Dealer(docStoreConn)
     kg_retrievaler = kg_search.KGSearch(docStoreConn)
 

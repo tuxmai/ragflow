@@ -267,6 +267,7 @@ def chat(dialog, messages, stream=True, **kwargs):
         tenant_ids = list(set([kb.tenant_id for kb in kbs]))
         knowledges = []
         if prompt_config.get("reasoning", False):
+            # TODO: retriever modified here
             reasoner = DeepResearcher(
                 chat_mdl,
                 prompt_config,
@@ -280,6 +281,7 @@ def chat(dialog, messages, stream=True, **kwargs):
                 elif stream:
                     yield think
         else:
+            # TODO: embedding model modified here
             if embd_mdl:
                 kbinfos = retriever.retrieval(
                     " ".join(questions),

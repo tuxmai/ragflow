@@ -92,7 +92,7 @@ class Canvas:
 
     def load(self):
         self.components = self.dsl["components"]
-        cpn_nms = set([])
+        cpn_nms = set()
         for k, cpn in self.components.items():
             cpn_nms.add(cpn["obj"]["component_name"])
 
